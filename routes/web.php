@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 
 
+
+
     
 Route::get('/switch-language/{lang}', function ($lang) {
     if (in_array($lang, config('app.locales', ['en', 'ar']))) {
