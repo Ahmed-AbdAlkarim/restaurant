@@ -4,41 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ShowController;
 
-use App\Services\PaymobService;
-use Illuminate\Http\Request;
-
-Route::post('/pay', function (Request $request, PaymobService $paymob) {
-    $order = $paymob->createOrder($request->amount, $request->phone, $request->email);
-    
-    if (!isset($order['id'])) {
-        return response()->json(['error' => 'خطأ في إنشاء الطلب'], 400);
-    }
-
-    $paymentKey = $paymob->getPaymentKey($request->amount, $order['id'], $request->phone, $request->email, "Ahmed", "Alkarim");
-
-    if (!isset($paymentKey['token'])) {
-        return response()->json(['error' => 'خطأ في إنشاء مفتاح الدفع'], 400);
-    }
-
-    $paymentUrl = $paymob->getPaymentUrl($paymentKey['token']);
-
-    return redirect($paymentUrl);
-});
-
-
-Route::post('/paymob/callback', function (Request $request) {
-    $data = $request->all();
-    
-    if ($data['success'] == "true") {
-        // تحديث حالة الطلب في قاعدة البيانات
-        return response()->json(['message' => 'تم الدفع بنجاح']);
-    }
-
-    return response()->json(['message' => 'فشل الدفع'], 400);
-});
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
