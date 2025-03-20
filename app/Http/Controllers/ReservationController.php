@@ -46,6 +46,8 @@ class ReservationController extends Controller
             return redirect()->back()->with('error', 'هذه الترابيزة محجوزة بالفعل في هذا الوقت.');
         }
 
+        
+
         Reservation::create([
             'name' => $request->name,
             'phone' => $request->phone,

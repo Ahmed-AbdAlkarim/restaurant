@@ -21,8 +21,17 @@
                     @if(session('error'))
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
-                    
-                    <form action="{{ route('reservations.store') }}" method="POST">
+                    <!-- القائمة المنسدلة لعرض الخطأ -->
+<div class="dropdown d-none" id="errorDropdown">
+    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        خطأ في الحجز
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item text-danger" id="errorMessage"></a></li>
+    </ul>
+</div>
+
+                    <form action="{{ route('reservations.store') }}" method="POST" >
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -135,3 +144,31 @@
     </div>
     <!-- Reservation End -->
 @endsection
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('reservationForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // منع إعادة تحميل الصفحة
+
+        let formData = new FormData(this);
+
+        fetch('{{ route('reservations.store') }}', { // إرسال الطلب إلى الكنترولر
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'error') {
+                document.getElementById('errorDropdown').classList.remove('d-none');
+                document.getElementById('errorMessage').innerText = data.message;
+            } else {
+                alert('تم الحجز بنجاح!');
+                location.reload(); // تحديث الصفحة بعد الحجز الناجح
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
