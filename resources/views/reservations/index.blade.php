@@ -2,24 +2,24 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Reservations</h1>
+    <h1 class="my-4">{{trans('site.resrevation')}}</h1>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Table</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Guests</th>
-                <th>Special Request</th>
-                <th>Actions</th>
+                <th>{{trans('site.name')}}</th>
+                <th>{{trans('site.contact')}}</th>
+                <th>{{trans('site.tablename')}}</th>
+                <th>{{trans('site.date')}}</th>
+                <th>{{trans('site.time')}}</th>
+                <th>{{trans('site.guests')}}</th>
+                <th>{{trans('site.specialrequest')}}</th>
+                <th>{{trans('site.action')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm">{{trans('site.delete')}}</button>
                     </form>
                 </td>
             </tr>

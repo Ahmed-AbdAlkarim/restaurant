@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <form  method="POST">
+    <form  method="POST" class="ms-4 mt-4">
         @csrf
         <div class="mb-3">
             <label for="name">{{trans('site.name')}}</label>

@@ -8,13 +8,13 @@
     <!-- Users List Table -->
 
     <div class="col-12">
-        <a href="{{route('admin.orders.create')}}" class="btn btn-primary">
+        <a href="{{route('admin.orders.create')}}" class="btn btn-primary mb-4">
         {{trans('site.addneworder')}}
         </a>
     </div>
     <div class="card-datatable table-responsive">
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>{{trans('site.id')}}</th>
                 <th>{{trans('site.name')}}</th>

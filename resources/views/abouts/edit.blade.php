@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>تعديل بيانات "من نحن"</h1>
+    <h1>{{ trans('site.aboutusedit') }}</h1>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

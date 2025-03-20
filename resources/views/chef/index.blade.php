@@ -8,8 +8,8 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>{{trans('site.image')}}</th>
                 <th>{{trans('site.name')}}</th>

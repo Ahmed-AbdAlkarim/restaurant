@@ -2,25 +2,23 @@
 
 @section('content')
 <div class="container">
-    <h1>إدارة بيانات "من نحن"</h1>
+    <h1>{{ trans('site.about') }}</h1>
 
     <table class="table table-bordered table-striped">
-        <thead>
+        <thead class="table-dark">
             <tr>
-                <th>#</th>
-                <th>العنوان الرئيسي</th>
-                <th>اسم المطعم</th>
-                <th>الوصف الأول</th>
-                <th>الوصف الثاني</th>
-                <th>عدد سنوات الخبرة</th>
-                <th>عدد الطهاة</th>
-                <th>الإجراءات</th>
+                <th>{{ trans('site.title') }}</th>
+                <th>{{ trans('site.restaurantname') }}</th>
+                <th>{{ trans('site.fdescription') }}</th>
+                <th>{{ trans('site.sdescription') }}</th>
+                <th>{{ trans('site.yearnumber') }}</th>
+                <th>{{ trans('site.chefnumber') }}</th>
+                <th>{{ trans('site.action') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach($about as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->subtitle }}</td>
                     <td class="mb-4 text-wrap text-break w-75">{{ Str::limit($item->description_1, 50) }}</td>

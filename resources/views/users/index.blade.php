@@ -84,24 +84,21 @@
     </div>
     <!-- Users List Table -->
 
-    <div class="col-12">
+    <div class="col-12 mb-4">
         <a href="{{route('admin.users.create')}}" class="btn btn-primary">
         {{trans('site.addnewuser')}}
         </a>
     </div>
     <div class="card-datatable table-responsive">
-        <table class="datatables-users table border-top">
-            <thead>
+        <table class="table table-bordered table-striped">
+        <thead class="table-dark">
                 <tr>
                     <th>{{trans('site.id')}}</th>
                     <th>{{trans('site.name')}}</th>
                     <th>{{trans('site.email')}}</th>
                     <th>{{trans('site.contact')}}</th>
-                    <!-- <th>Country</th> -->
                     <th>{{trans('site.role')}}</th>
-                    <!-- <th>Plan</th> -->
                     <th>{{trans('site.status')}}</th>
-                    <!-- <th>passeword</th> -->
                     <th>{{trans('site.action')}}</th>
                 </tr>
             </thead>
@@ -112,17 +109,14 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->contact }}</td>
-                    <!-- <td>{{ $user->country }}</td> -->
                     <td>{{ $user->role }}</td>
-                    <!-- <td>{{ $user->plan }}</td> -->
                     <td>{{ $user->status }}</td>
-                    <!-- <td>{{ $user->password }}</td> -->
-                    <td>
-                        <a href="{{route('admin.users.edit',['id'=>$user->id])}}" class="btn btn-warning btn-sm">
-                        {{trans('site.edit')}}
+                    <td style="white-space: nowrap;">
+                        <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm">
+                            {{ trans('site.edit') }}
                         </a>
-                        <a href="{{route('admin.users.delete',['id'=>$user->id])}}" class="btn btn-danger btn-sm">
-                        {{trans('site.delete')}}
+                        <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}" class="btn btn-danger btn-sm">
+                            {{ trans('site.delete') }}
                         </a>
                     </td>
 

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <form  method="POST">
+    <form  method="POST" class="ms-4 mt-4">
         @csrf
         <div class="mb-3">
             <label for="name">{{trans('site.name')}}</label>
@@ -59,7 +59,7 @@
         </div>
         <div class="mb-3">
             <label for="password">{{trans('site.password')}}</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="password">
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="password">
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

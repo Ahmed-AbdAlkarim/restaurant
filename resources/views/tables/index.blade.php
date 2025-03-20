@@ -8,13 +8,13 @@
     <!-- Users List Table -->
 
     <div class="col-12">
-        <a href="{{route('admin.tables.create')}}" class="btn btn-primary">
+        <a href="{{route('admin.tables.create')}}" class="btn btn-primary  mb-4">
         {{trans('site.addnewtable')}}
         </a>
     </div>
     <div class="card-datatable table-responsive">
-        <table class="datatables-users table border-top">
-            <thead>
+        <table class="table table-bordered table-striped">
+        <thead class="table-dark">
                 <tr>
                 <th>{{trans('site.name')}}</th>
                 <th>{{trans('site.capacity')}}</th>

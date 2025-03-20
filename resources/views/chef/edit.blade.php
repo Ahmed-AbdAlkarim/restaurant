@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>تعديل بيانات الشيف</h1>
+    <h1>{{ trans('site.chefedit')}}</h1>
     <form action="{{ route('admin.chefs.update', $chef->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
 
