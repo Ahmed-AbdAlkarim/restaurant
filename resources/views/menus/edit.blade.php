@@ -23,7 +23,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="category">{{trans('site.categoty')}}</label>
+            <label for="category">{{trans('site.category')}}</label>
             <input id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category" value="{{ $menu->category }}" required autocomplete="category">
             @error('category')
                 <span class="invalid-feedback" role="alert">

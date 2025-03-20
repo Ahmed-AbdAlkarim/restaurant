@@ -70,7 +70,7 @@
                                 @foreach($menus as $menu)   
                                 <div class="col-lg-6">
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ asset('storage/' . $menu->image) }}" alt="صورة المنتج" width="95" class="rounded">
+                                        <img src="{{ asset('storage/' . $menu->image) }}" alt="صورة المنتج" width="95" height="95" >
                                         <div class="w-100 d-flex flex-column text-start ps-4">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
                                                 <span>{{ $menu->name }}</span>

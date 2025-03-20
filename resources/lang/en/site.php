@@ -9,6 +9,7 @@ return [
 'orders' => 'Orders',
 'menu' => 'Menu',
 'id' => 'ID',
+'category' => 'Category',
 'name' => 'Name',
 'email' => 'Email',
 'contact' => 'Contact',

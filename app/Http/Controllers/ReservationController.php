@@ -34,20 +34,28 @@ class ReservationController extends Controller
             'special_request' => 'nullable|string',
         ]);
     
-        
-
-        // التحقق من توفر الترابيزة في هذا التوقيت
-        $exists = Reservation::where('table_id', $request->table_id)
+        // حساب وقت انتهاء الحجز (بعد ساعة)
+        $startTime = $request->time;
+        $endTime = date('H:i', strtotime($startTime . ' +1 hour'));
+    
+        // البحث عن حجز متداخل
+        $existingReservation = Reservation::where('table_id', $request->table_id)
             ->where('date', $request->date)
-            ->where('time', $request->time)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->back()->with('error', 'هذه الترابيزة محجوزة بالفعل في هذا الوقت.');
+            ->where(function ($query) use ($startTime, $endTime) {
+                $query->whereBetween('time', [$startTime, $endTime])
+                      ->orWhereBetween(\DB::raw("ADDTIME(time, '1:00:00')"), [$startTime, $endTime]);
+            })
+            ->first(); // نستخدم first() عشان نجيب الحجز الأول المتداخل
+    
+        if ($existingReservation) {
+            // استخراج وقت بداية ونهاية الحجز الحالي بتنسيق 12 ساعة
+            $reservedStartTime = date('h:i A', strtotime($existingReservation->time));
+            $reservedEndTime = date('h:i A', strtotime($existingReservation->time . ' +1 hour'));
+    
+            return redirect()->back()->with('error', "هذه الترابيزة محجوزة بالفعل من الساعة $reservedStartTime حتى الساعة $reservedEndTime.");
         }
-
-        
-
+    
+        // حفظ الحجز
         Reservation::create([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -57,10 +65,10 @@ class ReservationController extends Controller
             'guests' => $request->guests,
             'special_request' => $request->special_request,
         ]);
-;
-
+    
         return redirect()->back()->with('success', 'تم الحجز بنجاح!');
     }
+    
 
     public function destroy($id)
     {
