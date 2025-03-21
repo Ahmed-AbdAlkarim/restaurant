@@ -22,14 +22,14 @@
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
                     <!-- القائمة المنسدلة لعرض الخطأ -->
-<div class="dropdown d-none" id="errorDropdown">
-    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        خطأ في الحجز
-    </button>
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item text-danger" id="errorMessage"></a></li>
-    </ul>
-</div>
+                    <div class="dropdown d-none" id="errorDropdown">
+                        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            خطأ في الحجز
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item text-danger" id="errorMessage"></a></li>
+                        </ul>
+                    </div>
 
                     <form action="{{ route('reservations.store') }}" method="POST" >
                         @csrf
@@ -84,15 +84,12 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="table_id" name="table_id" required>
                                         @foreach($tables as $table)
-                                            <option value="{{ $table->id }}">{{ $table->name }} ({{ $table->capacity }} People)</option>
+                                            <option value="{{ $table->id }}" data-reservations='@json($table->reservations)'>
+                                                {{ $table->name }} ({{ $table->capacity }} people)
+                                            </option>
                                         @endforeach
                                     </select>
-                                    <label for="table_id">Select Table</label>
-                                    @error('table_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <label for="table_id">select table</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -146,29 +143,20 @@
 @endsection
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('reservationForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // منع إعادة تحميل الصفحة
+    document.getElementById("reservationForm").addEventListener("submit", function(e) {
+        let tableSelect = document.getElementById("table_id");
+        let selectedTable = tableSelect.options[tableSelect.selectedIndex];
+        let reservations = JSON.parse(selectedTable.getAttribute("data-reservations") || "[]");
+        
+        let selectedDate = document.getElementById("date").value;
+        let selectedTime = document.getElementById("time").value;
 
-        let formData = new FormData(this);
+        let isReserved = reservations.some(res => res.date === selectedDate && res.time === selectedTime);
 
-        fetch('{{ route('reservations.store') }}', { // إرسال الطلب إلى الكنترولر
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'error') {
-                document.getElementById('errorDropdown').classList.remove('d-none');
-                document.getElementById('errorMessage').innerText = data.message;
-            } else {
-                alert('تم الحجز بنجاح!');
-                location.reload(); // تحديث الصفحة بعد الحجز الناجح
-            }
-        })
-        .catch(error => console.error('Error:', error));
+        if (isReserved) {
+            e.preventDefault();
+            alert("هذه الترابيزة محجوزة بالفعل في هذا الوقت.");
+        }
     });
 });
 </script>

@@ -12,6 +12,7 @@ return [
 'tablename' => 'Table Name',
 'date' => 'Date',
 'time' => 'Time',
+'dateandtime' => 'Date and Time',
 'guests' => 'Guests',
 'specialrequest' => 'Special Request',
 'resrevation' => 'Reservation',

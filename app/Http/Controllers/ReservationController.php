@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Table;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -16,14 +17,13 @@ class ReservationController extends Controller
     // عرض صفحة الحجز
     public function create()
     {
-        $tables = Table::where('status', 'available')->get(); // جلب الطاولات المتاحة فقط
+        $tables = Table::with('reservations')->get(); // جلب جميع الترابيزات مع الحجوزات 
         return view('client.reservation', compact('tables'));
     }
 
     // تخزين بيانات الحجز
     public function store(Request $request)
     {
-        // التحقق من صحة البيانات
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|regex:/^\d{10,15}$/',
@@ -34,28 +34,27 @@ class ReservationController extends Controller
             'special_request' => 'nullable|string',
         ]);
     
-        // حساب وقت انتهاء الحجز (بعد ساعة)
-        $startTime = $request->time;
-        $endTime = date('H:i', strtotime($startTime . ' +1 hour'));
+        // حساب وقت انتهاء الحجز (مدة ساعة)
+        $endTime = date('H:i', strtotime($request->time . ' +1 hour'));
     
-        // البحث عن حجز متداخل
+        // البحث عن أي حجز متعارض
         $existingReservation = Reservation::where('table_id', $request->table_id)
             ->where('date', $request->date)
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->whereBetween('time', [$startTime, $endTime])
-                      ->orWhereBetween(\DB::raw("ADDTIME(time, '1:00:00')"), [$startTime, $endTime]);
+            ->where(function ($query) use ($request, $endTime) {
+                $query->whereBetween('time', [$request->time, $endTime])
+                      ->orWhereBetween(DB::raw("ADDTIME(time, '1:00:00')"), [$request->time, $endTime]);
             })
-            ->first(); // نستخدم first() عشان نجيب الحجز الأول المتداخل
+            ->first(); // جلب بيانات الحجز بدلاً من التحقق فقط من وجوده
     
         if ($existingReservation) {
-            // استخراج وقت بداية ونهاية الحجز الحالي بتنسيق 12 ساعة
+            // تحويل وقت الحجز إلى تنسيق 12 ساعة
             $reservedStartTime = date('h:i A', strtotime($existingReservation->time));
             $reservedEndTime = date('h:i A', strtotime($existingReservation->time . ' +1 hour'));
     
-            return redirect()->back()->with('error', "هذه الترابيزة محجوزة بالفعل من الساعة $reservedStartTime حتى الساعة $reservedEndTime.");
+            return redirect()->back()->with('error', "هذه الترابيزة محجوزة من $reservedStartTime إلى $reservedEndTime.");
         }
     
-        // حفظ الحجز
+        // إنشاء الحجز الجديد
         Reservation::create([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -69,11 +68,24 @@ class ReservationController extends Controller
         return redirect()->back()->with('success', 'تم الحجز بنجاح!');
     }
     
-
+    
     public function destroy($id)
     {
         $reservation = Reservation::findOrFail($id);
+        
+        // تحديث حالة الترابيزة إلى "Available" عند حذف الحجز
+        Table::where('id', $reservation->table_id)->update(['status' => 'Available']);
+    
         $reservation->delete();
         return redirect()->back()->with('success', 'تم حذف الحجز بنجاح!');
     }
 }
+    
+
+//     public function destroy($id)
+//     {
+//         $reservation = Reservation::findOrFail($id);
+//         $reservation->delete();
+//         return redirect()->back()->with('success', 'تم حذف الحجز بنجاح!');
+//     }
+// }

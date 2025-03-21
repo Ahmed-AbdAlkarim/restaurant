@@ -12,6 +12,7 @@ return [
 'tablename' => 'اسم الترابيزة',
 'date' => 'التاريخ',
 'time' => 'الوقت',
+'dateandtime' => 'التاريخ والوقت',
 'guests' => 'عدد الاشخاص',
 'specialrequest' => 'طلبات خاصة',
 'resrevation' => 'الحجز',

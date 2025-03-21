@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 use App\Models\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Reservation; // استدعاء الموديل الخاص بالحجوزات
 
 
 class TablesController extends Controller
 {
     // عرض جميع الطاولات
-    function index()
+    public function index()
     {
-        $tables = Table::paginate(25);  // الحصول على جميع الطاولات من قاعدة البيانات
+        $tables = Table::with(['reservations' => function ($query) { // تأكد أن العلاقة بصيغة الجمع
+            $query->where('date', '>=', now()->toDateString()) // الحجوزات المستقبلية فقط
+                ->orderBy('date', 'asc') // ترتيب تصاعدي حسب التاريخ
+                ->orderBy('time', 'asc'); // ترتيب تصاعدي حسب الوقت
+        }])->paginate(25);
+
         return view('tables.index', compact('tables'));
     }
+
 
     // عرض نموذج لإضافة طاولة جديدة
     function create()

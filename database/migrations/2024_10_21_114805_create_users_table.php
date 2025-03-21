@@ -15,9 +15,7 @@ class CreateUsersTable extends Migration
                 $table->string('email')->unique();
                 $table->text('contact');
                 $table->boolean('status');
-                //$table->string('country');
                 $table->string('role');
-                //$table->string('plan');
                 $table->timestamps();
             });
         }
