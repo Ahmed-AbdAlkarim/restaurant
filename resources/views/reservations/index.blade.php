@@ -30,7 +30,7 @@
                 <td>{{ $reservation->phone }}</td>
                 <td>{{ $reservation->table->name }} ({{ $reservation->table->capacity }} People)</td>
                 <td>{{ $reservation->date }}</td>
-                <td>{{ $reservation->time }}</td>
+                <td>{{ \Carbon\Carbon::parse($reservation->time)->format('h:i A') }}</td>
                 <td>{{ $reservation->guests }}</td>
                 <td>{{ $reservation->special_request }}</td>
                 <td>

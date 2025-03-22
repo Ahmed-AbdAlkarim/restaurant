@@ -18,8 +18,6 @@ class OrdersController extends Controller
 
     }
 
-    
-
     // عرض نموذج لإنشاء طلب جديد
     public function create()
     {
@@ -29,36 +27,25 @@ class OrdersController extends Controller
     }
 
     // تخزين الطلب الجديد
-   // تخزين الطلب الجديد
    public function submit(Request $request)
     {
-        dd($request->all());
 
         $validatedData = $request->validate([
             'items.*.menu_id' => 'required|integer|exists:menus,id',
             'items.*.quantity' => 'required|integer|min:1',
-            'contact' => 'required|string', // تأكد من استقبال رقم الهاتف
         ]);
-
-        // تأكد إن المستخدم مسجل الدخول
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'يجب تسجيل الدخول أولاً');
-        }
-
         $totalPrice = 0;
 
         // إنشاء الطلب مع user_id و contact
         $order = Order::create([
-            'user_id' => $userId,
-            'contact' => $request->contact,
             'total_price' => 0,
             'status' => 'pending',
         ]);
         
-        
-
+    
         foreach ($request->items as $item) {
-            $price = Menu::find($item['menu_id'])->price * $item['quantity'];
+            $menuItem = Menu::find($item['menu_id']);
+            $price = $menuItem->price * $item['quantity'];            
             $totalPrice += $price;
 
             $order->orderItems()->create([
@@ -85,7 +72,6 @@ class OrdersController extends Controller
         return view('orders.edit', compact('order', 'tables', 'menuItems'));
     }
 
-    // تحديث حالة الطلب أو تعديله
     // تحديث حالة الطلب أو تعديله
     public function update(Request $request, $id)
     {
@@ -117,6 +103,12 @@ class OrdersController extends Controller
                 ]);
             }
         }
+
+        // **إعادة حساب السعر الإجمالي بعد التحديث**
+        $totalPrice = $order->orderItems()->sum('price'); 
+        $order->update([
+            'total_price' => $totalPrice,
+        ]);
 
         return redirect()->route('admin.orders')->with('success', 'Order updated successfully.');
     }

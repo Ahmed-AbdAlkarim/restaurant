@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Menu; 
 use App\Models\Table; 
+use App\Models\Menu; 
 use Illuminate\Support\Facades\DB;
 use App\Models\Chef;
 use App\Models\About;
@@ -63,8 +63,9 @@ class ShowController extends Controller
        ]);
    
        foreach ($request->items as $item) {
-           $price = Menu::find($item['menu_id'])->price * $item['quantity'];
-           $totalPrice += $price;
+            $menuItem = Menu::find($item['menu_id']);
+            $price = $menuItem->price * $item['quantity'];            
+            $totalPrice += $price;
    
            $order->orderItems()->create([
                'menu_id' => $item['menu_id'],

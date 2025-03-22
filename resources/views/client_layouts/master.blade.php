@@ -72,7 +72,9 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="btn btn-outline-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a id="navbarDropdown" class="btn btn-outline-danger dropdown-toggle" href="#" role="button" 
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                                    data-bs-auto-close="outside">  <!-- ✅ يمنع الإغلاق التلقائي -->
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">

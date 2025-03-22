@@ -66,7 +66,15 @@ class MenusController extends Controller
         ]);
 
         $menu = Menu::find($id);
-        $menu->update($request->all());  // تحديث البيانات
+        $menu->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'category' => $request->category,
+        ]);        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('menu_images', 'public'); // حفظ الصورة الجديدة
+            $menu->update(['image' => $imagePath]); // تحديث الصورة في قاعدة البيانات
+        }
 
         return redirect()->route('admin.menu')->with('success', 'Menu item updated successfully!');
     }
