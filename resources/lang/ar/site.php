@@ -13,6 +13,7 @@ return [
 'date' => 'التاريخ',
 'time' => 'الوقت',
 'dateandtime' => 'التاريخ والوقت',
+'restaurantinfo' => 'معلومات المطعم',
 'guests' => 'عدد الاشخاص',
 'specialrequest' => 'طلبات خاصة',
 'resrevation' => 'الحجز',

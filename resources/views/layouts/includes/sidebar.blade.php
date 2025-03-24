@@ -156,6 +156,21 @@
 
               </ul>
             </li>
+
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons ti ti-info-circle"></i>
+                <div data-i18n="{{trans('site.restaurantinfo')}}">{{trans('site.restaurantinfo')}}</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{{route('admin.abouts')}}" class="menu-link">
+                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
             
 
         </ul>

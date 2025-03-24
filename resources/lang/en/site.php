@@ -13,6 +13,7 @@ return [
 'date' => 'Date',
 'time' => 'Time',
 'dateandtime' => 'Date and Time',
+'restaurantinfo' => 'Restaurant Info',
 'guests' => 'Guests',
 'specialrequest' => 'Special Request',
 'resrevation' => 'Reservation',
