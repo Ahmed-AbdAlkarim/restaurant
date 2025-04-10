@@ -60,6 +60,7 @@ class ShowController extends Controller
        $order = Order::create([
            'total_price' => 0,
            'status' => 'pending', // تعيين الحالة الافتراضية تلقائيًا
+              'user_id' => auth()->user()->id,
        ]);
    
        foreach ($request->items as $item) {

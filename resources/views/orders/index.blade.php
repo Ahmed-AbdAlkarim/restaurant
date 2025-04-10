@@ -29,7 +29,7 @@
             @foreach($orders as $order)
             <tr>
                 <td>{{ $order->id }}</td>
-                <td>{{ $order->user ? $order->user->name : 'مجهول' }}</td>
+                <td>{{ $order->user ? $order->user->name : 'مجهول'}}</td>
                 <td>{{ $order->user ? $order->user->contact : 'غير متوفر' }}</td>
                 <td>{{ $order->status }}</td>
                 <td>{{ $order->total_price }}</td>

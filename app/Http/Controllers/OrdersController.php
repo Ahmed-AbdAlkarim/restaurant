@@ -35,11 +35,12 @@ class OrdersController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
         ]);
         $totalPrice = 0;
-
+        
         // إنشاء الطلب مع user_id و contact
         $order = Order::create([
             'total_price' => 0,
             'status' => 'pending',
+            'user_id' => auth()->user()->id,
         ]);
         
     
