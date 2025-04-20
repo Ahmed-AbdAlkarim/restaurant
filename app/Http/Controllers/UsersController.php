@@ -7,8 +7,24 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    function index() {
-        $users = User::paginate(25);
+    function index(Request $request) {
+        $query = User::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('contact', 'like', "%$search%")
+                ->orWhere('status', 'like', "%$search%")
+                ->orWhere('role', 'like', "%$search%");
+            });
+        }
+
+        $users = $query->paginate(25);
+        if ($request->ajax()) {
+            return view('users.partials.table', compact('users'))->render();  // هذا السطر يرسل الجدول فقط
+        }
         return view('users.index',compact('users'));
     }
     function create() {

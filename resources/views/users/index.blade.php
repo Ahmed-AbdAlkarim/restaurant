@@ -90,42 +90,12 @@
         </a>
     </div>
     <div class="card-datatable table-responsive">
-        <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-                <tr>
-                    <th>{{trans('site.id')}}</th>
-                    <th>{{trans('site.name')}}</th>
-                    <th>{{trans('site.email')}}</th>
-                    <th>{{trans('site.contact')}}</th>
-                    <th>{{trans('site.role')}}</th>
-                    <th>{{trans('site.status')}}</th>
-                    <th>{{trans('site.action')}}</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->contact }}</td>
-                    <td>{{ $user->role }}</td>
-                    <td>{{ $user->status }}</td>
-                    <td style="white-space: nowrap;">
-                        <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm">
-                            {{ trans('site.edit') }}
-                        </a>
-                        <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}" class="btn btn-danger btn-sm">
-                            {{ trans('site.delete') }}
-                        </a>
-                    </td>
-
-
-
-                </tr>
-            @endforeach
-        </tbody>
-        </table>
+        <input type="text" id="search" placeholder="ابحث عن اسم أو إيميل">
+        <div id="results">
+            @include('users.partials.table', ['users' => $users])
+        </div>
+        
+       
     </div>
 
 
@@ -133,3 +103,21 @@
 </div>
 <!-- / Content -->
 @stop
+@section('scripts')
+<script>
+    $('#search').on('keyup', function () {
+        let value = $(this).val(); // جاب اللي مكتوب في مربع البحث
+
+        $.ajax({
+            url: '{{ route("users.index") }}', // نفس صفحة اليوزر
+            data: {
+                search: value // بعتنا النص اللي المستخدم كتبه
+            },
+            success: function (data) {
+                $('#results').html(data); // غيرنا الجدول بالنتائج الجديدة
+            }
+        });
+    });
+</script>
+@stop
+
