@@ -14,6 +14,7 @@ return [
 'time' => 'Time',
 'dateandtime' => 'Date and Time',
 'restaurantinfo' => 'Restaurant Info',
+'usersearch' => 'Search User',
 'guests' => 'Guests',
 'specialrequest' => 'Special Request',
 'resrevation' => 'Reservation',

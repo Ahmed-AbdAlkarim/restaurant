@@ -14,6 +14,7 @@ return [
 'time' => 'الوقت',
 'dateandtime' => 'التاريخ والوقت',
 'restaurantinfo' => 'معلومات المطعم',
+'usersearch' => 'بحث عن مستخدم',
 'guests' => 'عدد الاشخاص',
 'specialrequest' => 'طلبات خاصة',
 'resrevation' => 'الحجز',

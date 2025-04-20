@@ -21,10 +21,7 @@ class UsersController extends Controller
             });
         }
 
-        $users = $query->paginate(25);
-        if ($request->ajax()) {
-            return view('users.partials.table', compact('users'))->render();  // هذا السطر يرسل الجدول فقط
-        }
+        $users = $query->get();
         return view('users.index',compact('users'));
     }
     function create() {

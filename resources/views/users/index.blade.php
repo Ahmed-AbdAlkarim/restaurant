@@ -90,34 +90,72 @@
         </a>
     </div>
     <div class="card-datatable table-responsive">
-        <input type="text" id="search" placeholder="ابحث عن اسم أو إيميل">
-        <div id="results">
-            @include('users.partials.table', ['users' => $users])
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">{{trans('site.usersearch')}}</h5>
+            </div>
+            <div class="mt-3">
+                <input type="text" id="search" class="form-control" placeholder="ابحث عن اسم أو إيميل">
+            </div>
         </div>
-        
-       
+    </div>        
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+                <tr>
+                    <th>{{trans('site.id')}}</th>
+                    <th>{{trans('site.name')}}</th>
+                    <th>{{trans('site.email')}}</th>
+                    <th>{{trans('site.contact')}}</th>
+                    <th>{{trans('site.role')}}</th>
+                    <th>{{trans('site.status')}}</th>
+                    <th>{{trans('site.action')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->contact }}</td>
+                    <td>{{ $user->role }}</td>
+                    <td>{{ $user->status }}</td>
+                    <td style="white-space: nowrap;">
+                        <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm">
+                            {{ trans('site.edit') }}
+                        </a>
+                        <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}" class="btn btn-danger btn-sm">
+                            {{ trans('site.delete') }}
+                        </a>
+                    </td>
+
+
+
+                </tr>
+            @endforeach
+        </tbody>
+        </table>
     </div>
 
 
 </div>
 </div>
 <!-- / Content -->
-@stop
-@section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#search').on('keyup', function () {
-        let value = $(this).val(); // جاب اللي مكتوب في مربع البحث
-
+    $('#search').on('keyup', function() {
+        var value = $(this).val();
         $.ajax({
-            url: '{{ route("users.index") }}', // نفس صفحة اليوزر
-            data: {
-                search: value // بعتنا النص اللي المستخدم كتبه
-            },
-            success: function (data) {
-                $('#results').html(data); // غيرنا الجدول بالنتائج الجديدة
+            url: "{{ route('admin.users') }}",
+            type: "GET",
+            data: { search: value },
+            success: function(response) {
+                let dom = $(response);
+                let newTbody = dom.find('table tbody').html();
+                $('table tbody').html(newTbody);
             }
         });
     });
 </script>
 @stop
-
