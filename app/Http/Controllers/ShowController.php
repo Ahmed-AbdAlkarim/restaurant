@@ -50,17 +50,17 @@ class ShowController extends Controller
     public function submitOrder(Request $request)
     {
        $validatedData = $request->validate([
-           'items.*.menu_id' => 'required|integer|exists:menus,id',
-           'items.*.quantity' => 'required|integer|min:1',
+            'items.*.menu_id' => 'required|integer|exists:menus,id',
+            'items.*.quantity' => 'required|integer|min:1',
        ]);
    
        $totalPrice = 0;
    
        // إنشاء الطلب بدون إجبار `table_id` و `status`
        $order = Order::create([
-           'total_price' => 0,
-           'status' => 'pending', // تعيين الحالة الافتراضية تلقائيًا
-              'user_id' => auth()->user()->id,
+            'total_price' => 0,
+            'status' => 'pending', // تعيين الحالة الافتراضية تلقائيًا
+            'user_id' => auth()->user()->id,
        ]);
    
        foreach ($request->items as $item) {
@@ -69,9 +69,9 @@ class ShowController extends Controller
             $totalPrice += $price;
    
            $order->orderItems()->create([
-               'menu_id' => $item['menu_id'],
-               'quantity' => $item['quantity'],
-               'price' => $price,
+                'menu_id' => $item['menu_id'],
+                'quantity' => $item['quantity'],
+                'price' => $price,
            ]);
        }
    
