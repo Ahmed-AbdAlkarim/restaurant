@@ -22,22 +22,6 @@
             @enderror
         </div>
 
-
-
-        <div class="mb-3">
-            <label for="status">{{trans('site.status')}}</label>
-            <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" name="status" value="{{ $table->status }}" required autocomplete="status" required>
-                <option value="Available">Available</option>
-                <option value="Reserved">Reserved</option>
-                <option value="Occupied">Occupied</option>
-            </select>
-            @error('status')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 @stop
