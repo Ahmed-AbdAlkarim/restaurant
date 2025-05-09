@@ -40,139 +40,59 @@
 
         <ul>
         <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{ url('/user') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-home"></i>
                 <div data-i18n="{{trans('site.home')}}">{{trans('site.home')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url('/user') }}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
             <li class="menu-item">
-              <a href="" class="menu-link menu-toggle">
+              <a href="{{route('admin.users')}}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-users"></i>
                 <div data-i18n="{{trans('site.users')}}">{{trans('site.users')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.users')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.tables')}}" class="menu-link">
               <i class="menu-icon tf-icons ti ti-table"></i>
                 <div data-i18n="{{trans('site.tables')}}">{{trans('site.tables')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.tables')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
             
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.reservations')}}" class="menu-link">
               <i class="menu-icon tf-icons ti ti-clock"></i>
                 <div data-i18n="{{trans('site.reservation')}}">{{trans('site.reservation')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.reservations')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.orders')}}" class="menu-link">
               <i class="menu-icon tf-icons ti ti-shopping-cart"></i>
                 <div data-i18n="{{trans('site.orders')}}">{{trans('site.orders')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.orders')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.menu')}}" class="menu-link">
               <i class="menu-icon tf-icons ti ti-menu-2"></i>
                 <div data-i18n="{{trans('site.menu')}}">{{trans('site.menu')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.menu')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
             
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.chefs')}}" class="menu-link">
               <i class="menu-icon tf-icons ti ti-users"></i>
                 <div data-i18n="{{trans('site.chef')}}">{{trans('site.chef')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.chefs')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
+
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{route('admin.abouts')}}" class="menu-link ">
               <i class="menu-icon tf-icons ti ti-info-circle"></i>
                 <div data-i18n="{{trans('site.about')}}">{{trans('site.about')}}</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.abouts')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
             </li>
-
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-info-circle"></i>
-                <div data-i18n="{{trans('site.restaurantinfo')}}">{{trans('site.restaurantinfo')}}</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.abouts')}}" class="menu-link">
-                    <div data-i18n="{{trans('site.list')}}">{{trans('site.list')}}</div>
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-            
-
         </ul>
         </aside>
         <!-- / Menu -->
